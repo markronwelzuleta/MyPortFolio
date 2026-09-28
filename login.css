@@ -1,0 +1,216 @@
+/* Clean, compact CSS for flip login/register card
+   Matches your neon/glass theme from portfolio.
+*/
+
+:root{
+  --bg: #0b0f14;
+  --panel: rgba(255,255,255,0.04);
+  --accent: #00ffe5;
+  --glass-border: rgba(255,255,255,0.08);
+  --text: #e9faff;
+  --muted: rgba(233,250,255,0.65);
+  --transition: 400ms cubic-bezier(.2,.9,.2,1);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: radial-gradient(circle at top, #0f1520, #090d13 70%);
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px;
+}
+
+/* container */
+.page{width:100%;max-width:1100px;margin:auto}
+.auth-wrap{width:100%;display:grid;grid-template-columns:1fr 420px;gap:40px;align-items:center}
+
+/* left column hint (optional) - keep empty so layout matches your portfolio */
+.auth-wrap::before{
+  content:'';
+  display:block;
+  min-height:360px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.02);
+}
+
+/* Flip card shell */
+.flip-card{
+  width:100%;
+  max-width:420px;
+  height:420px;
+  perspective:1200px;
+  margin:auto;
+}
+
+/* inner that rotates */
+.flip-card-inner{
+  position:relative;
+  width:100%;
+  height:100%;
+  transform-style:preserve-3d;
+  transition: transform var(--transition);
+  border-radius:18px;
+}
+
+/* when flipped apply this (JS toggles class .is-flipped on container) */
+.flip-card.is-flipped .flip-card-inner{
+  transform: rotateY(180deg);
+}
+
+/* card faces (front/back) */
+.face{
+  position:absolute;
+  inset:0;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  padding:32px;
+  border-radius:18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid var(--glass-border);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 30px rgba(0,255,224,0.03);
+}
+
+/* slight neon top glow (matching your logo) */
+.face::before{
+  content:'';
+  position:absolute;left:-20px;right:-20px;top:-40px;height:60px;
+  background: radial-gradient(closest-side, rgba(0,255,224,0.06), transparent 60%);
+  filter:blur(12px);
+  border-radius:12px;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* back face rotated */
+.back{ transform: rotateY(180deg); }
+
+/* cards title */
+.card-title{
+  margin:0 0 18px;
+  font-size:26px;
+  font-weight:700;
+  color:var(--accent);
+  text-align:center;
+  z-index:1;
+}
+
+/* form fields */
+.field{margin-bottom:14px;z-index:1}
+.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+.field input{
+  width:100%;
+  padding:12px 14px;
+  border-radius:10px;
+  background: rgba(0,0,0,0.35);
+  color:var(--text);
+  border:1px solid rgba(255,255,255,0.03);
+  outline:none;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+.field input:focus{
+  box-shadow: 0 0 0 6px rgba(0,255,224,0.06);
+  border-color:var(--accent);
+  transform: translateY(-1px);
+}
+
+/* buttons */
+.btn{
+  display:inline-block;
+  padding:10px 18px;
+  border-radius:12px;
+  border:none;
+  background:transparent;
+  color:var(--text);
+  cursor:pointer;
+  font-weight:600;
+}
+.btn.primary{
+  background: linear-gradient(90deg, #00eedd, #00ffa3);
+  color:#00221a;
+  box-shadow: 0 6px 18px rgba(0,255,224,0.12);
+}
+
+/* link look */
+.link-btn{
+  background:none;
+  border:none;
+  color:var(--accent);
+  font-weight:700;
+  cursor:pointer;
+  padding:0 6px;
+  text-decoration:underline;
+}
+
+/* muted paragraph */
+.muted{color:var(--muted);font-size:14px;text-align:center;margin-top:12px;z-index:1}
+
+/* welcome panel after login */
+.welcome{
+  padding:28px;
+  border-radius:12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid var(--glass-border);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  text-align:center;
+}
+
+/* toast */
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background: rgba(0,0,0,0.9);
+  color:var(--text);
+  padding:12px 16px;
+  border-radius:10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  font-weight:600;
+  z-index:9999;
+}
+
+/* small responsive adjustments */
+@media (max-width:900px){
+  .auth-wrap{grid-template-columns:1fr;gap:22px}
+  .flip-card{max-width:540px;height:auto}
+  .flip-card-inner, .face{height:auto;min-height:380px}
+}
+/* Center the whole login container */
+.page {
+  display: flex;
+  justify-content: center;   /* center left-right */
+  align-items: center;       /* center top-bottom */
+  height: 100vh;
+  width: 100%;
+}
+
+/* Center the flip card wrapper */
+.auth-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Optional: make sure the card doesn't float */
+.flip-card {
+  margin: 0 auto;
+}
+.page-title {
+  text-align: center;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #00f5d4; /* neon teal */
+  margin-bottom: 25px;
+  margin-top: -40px;
+  text-shadow: 0 0 10px rgba(0, 255, 220, 0.4);
+}
